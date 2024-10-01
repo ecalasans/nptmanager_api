@@ -1,0 +1,4 @@
+.idea
+npt_api/.venv/
+npt_api/templates/
+npt_api/manage.py
