@@ -7,5 +7,13 @@ class HospitalManager(AbstractManager):
     pass
 
 
-class HospitalModel(AbstractModel):
+class Hospital(AbstractModel):
     name = models.CharField(max_length=100)
+    sigla = models.CharField(max_length=10, blank=True)
+
+    class Meta:
+        verbose_name = 'Hospital'
+        verbose_name_plural = 'Hospitais'
+
+    def __str__(self):
+        return f"{self.name}({self.sigla})"

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "main",
     "main.user",
     "main.hospital",
+    "main.patient",
 ]
 
 MIDDLEWARE = [
