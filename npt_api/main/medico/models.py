@@ -1,12 +1,9 @@
 import uuid
-
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager, User
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.http import Http404
-
 from main.hospital.models import Hospital
-
 
 class MedicoManager(BaseUserManager):
     def get_object_by_public_id(self, public_id):
@@ -32,13 +29,25 @@ class MedicoManager(BaseUserManager):
 
         return medico
 
-class Medico(User):
+    def create_superuser(self, username, email, password=None, **kwargs):
+        kwargs.setdefault('is_staff', True)
+        kwargs.setdefault('is_superuser', True)
+        return self.create_user(username, email, password, **kwargs)
+
+class Medico(AbstractBaseUser, PermissionsMixin):
     public_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, db_index=True)
+    username = models.CharField(max_length=255, unique=True, db_index=True)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField(unique=True, db_index=True)
     crm = models.CharField(max_length=255, unique=True, db_index=True)
     hospitais = models.ManyToManyField(
         to=Hospital,
         related_name='medicos',
     )
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -58,12 +67,14 @@ class Medico(User):
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
 
-    # groups = models.ManyToManyField(
-    #     'auth.Group',
-    #     related_name='medicos_groups'
-    # )
-    #
-    # user_permissions = models.ManyToManyField(
-    #     'auth.Permission',
-    #     related_name='medicos_permissions'
-    # )
+    groups = models.ManyToManyField(
+        'auth.Group',
+        related_name='medicos_groups',
+        blank=True,
+    )
+
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        related_name='medicos_permissions',
+        blank=True,
+    )
