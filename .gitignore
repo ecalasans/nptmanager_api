@@ -1,4 +1,5 @@
 .idea
 npt_api/.venv/
 npt_api/templates/
+postgres/data/
 

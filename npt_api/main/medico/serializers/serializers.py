@@ -4,7 +4,7 @@ from main.hospital.models import Hospital
 from main.medico.models import Medico
 
 class MedicoSerializer(serializers.ModelSerializer):
-    id = serializers.UUIDField(read_only=True, format='hex', source='public_id')
+    public_id = serializers.UUIDField(read_only=True, format='hex')
     created = serializers.DateTimeField(read_only=True)
     updated = serializers.DateTimeField(read_only=True)
     hospitais = serializers.SlugRelatedField(
@@ -15,5 +15,5 @@ class MedicoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Medico
-        fields = ['id', 'username', 'first_name', 'last_name', 'email',
+        fields = ['public_id', 'username', 'first_name', 'last_name', 'email',
                   'crm', 'hospitais', 'created', 'updated', 'is_active',]
