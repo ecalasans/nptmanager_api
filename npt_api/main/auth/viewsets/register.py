@@ -15,19 +15,30 @@ class RegisterViewSet(ViewSet):
         serializer = self.serializer_class(data=request.data)
 
         serializer.is_valid(raise_exception=True)
+
         user = serializer.save()
-        refresh = RefreshToken.for_user(user)
 
-        response = {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }
+        if user:
+            refresh = RefreshToken.for_user(user)
 
-        return Response(
-            {
-                "user":  serializer.data,
-                "refresh": response['refresh'],
-                "access": response['access'],
-            },
-            status=status.HTTP_201_CREATED,
-        )
+            response = {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }
+
+            return Response(
+                {
+                    "user":  serializer.data,
+                    "refresh": response['refresh'],
+                    "access": response['access'],
+                    "message": "Usuário cadastrado com sucesso!",
+                },
+                status=status.HTTP_201_CREATED,
+            )
+        else:
+            return Response(
+                {
+                    "message":  "Ocorreu algum erro no servidor!  Tente mais tarde!"
+                },
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
