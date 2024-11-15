@@ -78,3 +78,7 @@ class Medico(AbstractBaseUser, PermissionsMixin):
         related_name='medicos_permissions',
         blank=True,
     )
+
+    def delete(self, *args, **kwargs):
+        self.hospitais.clear()
+        super().delete(*args, **kwargs)
