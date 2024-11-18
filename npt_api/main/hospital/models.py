@@ -9,6 +9,7 @@ class Hospital(models.Model):
                                  unique=True)
     nome = models.CharField(max_length=255)
     sigla = models.CharField(max_length=10)
+    is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

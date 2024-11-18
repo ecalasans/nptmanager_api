@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "main.hospital",
     "main.medico",
     "main.auth",
+    "main.paciente",
+    "main.leito",
 ]
 
 MIDDLEWARE = [
