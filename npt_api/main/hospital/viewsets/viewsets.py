@@ -10,4 +10,4 @@ class HospitalViewSet(ModelViewSet):
     http_method_names = ['get']
 
     def get_queryset(self):
-        return Hospital.objects.all()
+        return Hospital.objects.filter(is_active=True)
