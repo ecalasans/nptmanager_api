@@ -8,7 +8,7 @@ from main.paciente.models import Paciente
 class PacienteSerializer(serializers.ModelSerializer):
     public_id = serializers.UUIDField(read_only=True, format='hex')
     created_at = serializers.DateTimeField(read_only=True, format='%d/%m/%Y %H:%M:%S')
-    updated_at = serializers.DateTimeField(read_only=True, format='%d/%m/%Y %H:%M:$S')
+    updated_at = serializers.DateTimeField(read_only=True, format='%d/%m/%Y %H:%M:%S')
 
 
     class Meta:
