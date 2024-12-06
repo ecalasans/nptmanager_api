@@ -13,7 +13,8 @@ class MedicoSerializer(serializers.ModelSerializer):
         queryset=Hospital.objects.all(),
     )
 
+
     class Meta:
         model = Medico
         fields = ['public_id', 'username', 'first_name', 'last_name', 'email',
-                  'crm', 'hospitais', 'created', 'updated', 'is_active',]
+                  'crm', 'hospitais', 'created', 'updated', 'is_active', 'last_login']
