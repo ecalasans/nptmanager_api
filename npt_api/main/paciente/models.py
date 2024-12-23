@@ -47,6 +47,20 @@ class Paciente(models.Model):
 
         return sem_d[0]*7 + sem_d[1]
 
+    @property
+    def igc_atual(self):
+        hoje = datetime.date.today()
+
+        diferenca = hoje - self.dn
+
+        update_days = self.ignas_dias + diferenca.days
+
+        semanas = int(update_days / 7)
+        dias = update_days % 7
+
+        return f'{semanas}sem{dias}d'
+
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
