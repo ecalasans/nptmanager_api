@@ -58,6 +58,13 @@ class Paciente(models.Model):
         semanas = int(update_days / 7)
         dias = update_days % 7
 
+        if semanas > 40:
+            dias_acima = update_days - 280 #Corrigido para 40 semanas(40 x 7)
+            if dias_acima == 1:
+                return f'{dias_acima} dia'
+            else:
+                return f'{dias_acima} dias'
+
         return f'{semanas}sem{dias}d'
 
 

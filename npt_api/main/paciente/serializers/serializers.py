@@ -21,5 +21,5 @@ class PacienteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Paciente
-        fields = ['public_id', 'nome', 'cod_hospital', 'hospital','cod_leito', 'dn', 'pnasc', 'ignasc', 'ignas_dias',
+        fields = ['pk','public_id', 'nome', 'cod_hospital', 'hospital','cod_leito', 'dn', 'pnasc', 'ignasc', 'ignas_dias',
                   'created_at', 'updated_at', 'igc_atual']

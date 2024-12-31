@@ -22,6 +22,6 @@ class HospitalViewSet(ModelViewSet):
     @action(detail=False, methods=['get'], url_path=r'(?P<sigla>[^/.]+)/pacientes')
     def pacientes(self, request, sigla=None):
         hospital = get_object_or_404(Hospital, sigla=sigla)
-        pacientes = Paciente.objects.filter(cod_hospital=hospital)
+        pacientes = Paciente.objects.filter(cod_hospital=hospital).order_by("cod_leito")
         serializer  = PacienteSerializer(pacientes, many=True)
         return Response(serializer.data)
