@@ -1,26 +1,34 @@
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.settings import api_settings
+from rest_framework import serializers
+from django.contrib.auth import authenticate
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import update_last_login
-from django.utils import timezone
-
+from main.medico.models import Medico
 from main.medico.serializers import MedicoSerializer
 
-class LoginSerializer(TokenObtainPairSerializer):
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(write_only=True)
+    password = serializers.CharField(write_only=True, style={'input_type': 'password'})
+    user = MedicoSerializer(read_only=True)
 
     def validate(self, attrs):
-        data = super().validate(attrs)
+        email = attrs.get('email')
+        password = attrs.get('password')
 
-        refresh = self.get_token(self.user)
+        if email and password:
+            user = authenticate(request=self.context.get('request'),username=email, password=password)
+            attrs['user'] = MedicoSerializer(user).data
+        else:
+            msg = _('Credenciais inválidas ou ausentes')
+            raise serializers.ValidationError(msg, code='credenciais')
 
-        data['user'] = MedicoSerializer(self.user).data
-        data['refresh'] = str(refresh)
-        data['access'] = str(refresh.access_token)
+        return attrs
 
-        if api_settings.UPDATE_LAST_LOGIN:
-            update_last_login(None, self.user)
+    def create(self, validated_data):
+        user = validated_data['user']
 
-        # Atualiza o last_login
-        self.user.last_login = str(timezone.now())
-        self.user.save(update_fields=['last_login'])
+        update_last_login(None, user)
 
-        return data
+        return {
+            'user' : MedicoSerializer(user).data,
+        }
+
