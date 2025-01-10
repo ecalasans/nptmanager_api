@@ -16,19 +16,16 @@ class LoginSerializer(serializers.Serializer):
 
         if email and password:
             user = authenticate(request=self.context.get('request'),username=email, password=password)
-            attrs['user'] = MedicoSerializer(user).data
+
+            if user:
+                attrs['user'] = MedicoSerializer(user).data
+            else:
+                msg = _('Usuário ou senha inválidos!')
+                raise serializers.ValidationError(msg, code='usuario')
         else:
             msg = _('Credenciais inválidas ou ausentes')
             raise serializers.ValidationError(msg, code='credenciais')
 
         return attrs
 
-    def create(self, validated_data):
-        user = validated_data['user']
-
-        update_last_login(None, user)
-
-        return {
-            'user' : MedicoSerializer(user).data,
-        }
 

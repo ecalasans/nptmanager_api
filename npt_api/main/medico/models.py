@@ -45,7 +45,7 @@ class Medico(AbstractBaseUser, PermissionsMixin):
         to=Hospital,
         related_name='medicos',
     )
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)  #TODO:  Lembrar de mudar para false e implementar lógica de email para admin
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)

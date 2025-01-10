@@ -1,6 +1,6 @@
 services:
   dbpostgres:
-    image: postgres
+    image: postgres:15
     #restart: always
     volumes:
       - ./data:/var/lib/postgresql/data
