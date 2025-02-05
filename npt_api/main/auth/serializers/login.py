@@ -18,6 +18,7 @@ class LoginSerializer(serializers.Serializer):
             user = authenticate(request=self.context.get('request'),username=email, password=password)
 
             if user:
+                update_last_login(None, user)
                 attrs['user'] = MedicoSerializer(user).data
             else:
                 msg = _('Usuário ou senha inválidos!')

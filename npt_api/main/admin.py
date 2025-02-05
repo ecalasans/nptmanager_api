@@ -4,6 +4,7 @@ from main.medico.models import Medico
 from main.paciente.models import Paciente
 from main.leito.models import Leito
 from main.paciente.forms import PacienteForm
+from main.npt.models import Npt
 
 #
 @admin.register(Paciente)
@@ -22,4 +23,5 @@ class PacienteAdmin(admin.ModelAdmin):
 admin.site.register(Hospital)
 admin.site.register(Medico)
 admin.site.register(Leito)
+admin.site.register(Npt)
 

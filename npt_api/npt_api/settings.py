@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "main.auth",
     "main.paciente",
     "main.leito",
+    "main.npt"
 ]
 
 MIDDLEWARE = [
