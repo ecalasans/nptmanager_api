@@ -29,7 +29,7 @@ class Npt(models.Model):
     )
     cod_pac = models.ForeignKey(Paciente, on_delete=models.DO_NOTHING, related_name="npt")
     inicio = models.DateField()
-    fim = models.DateField()
+    fim = models.DateField(blank=True, null=True)
 
     objects = NptManager()
 

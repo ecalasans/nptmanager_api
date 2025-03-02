@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     "main.auth",
     "main.paciente",
     "main.leito",
-    "main.npt"
+    "main.npt",
+    "main.prescricao"
 ]
 
 MIDDLEWARE = [

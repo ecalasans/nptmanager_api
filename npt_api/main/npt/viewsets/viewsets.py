@@ -15,7 +15,7 @@ class NptViewSet(viewsets.ModelViewSet):
         return Npt.objects.all()
 
     def get_object(self):
-        obj = Npt.objects.get_obje(pk=self.kwargs['pk'])
+        obj = Npt.objects.get_object_by_public_id(pk=self.kwargs['pk'])
 
         self.check_object_permissions(self.request, obj)
 
